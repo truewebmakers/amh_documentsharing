@@ -8,12 +8,14 @@
       </svg>
     </div>
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
-      <li class="nav-item"><a class="nav-link" href="index.html">
+      {{-- <li class="nav-item"><a class="nav-link" href="index.html">
           <svg class="nav-icon">
             <use xlink:href="/assets/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-          </svg> Dashboard<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
+          </svg> Dashboard<span class="badge badge-sm bg-info ms-auto">NEW</span></a>
+        </li> --}}
        
       <li class="nav-title">Components</li>
+      @canany('user-management-access')
       <li 
       class="{{ ( 
          Route::currentRouteName() == 'permissions.index' 
@@ -73,6 +75,7 @@
            
         </ul>
       </li>
+      @endcanany
 
 
       {{-- Upload Documents --}}
@@ -96,14 +99,21 @@
         <ul class="nav-group-items">
           
           <li class="nav-item">
-            <a class="{{ ( Route::currentRouteName() == 'document.index' 
-            || Route::currentRouteName() == 'document.edit' 
-            || Route::currentRouteName() == 'document.create' 
+            <a class="{{ ( 
+               
+             Route::currentRouteName() == 'document.edit' 
+            // || Route::currentRouteName() == 'document.create' 
             || Route::currentRouteName() == 'document.show' 
 
             ) ? 'nav-link active' : 'nav-link' }}"
              href="{{ route('document.create') }}">
               <span class="nav-icon"></span> Send</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="{{ (Route::currentRouteName() == 'document.index' ) ? 'nav-link active' : 'nav-link' }}"
+             href="{{ route('document.index') }}">
+              <span class="nav-icon"></span> Explore </a>
           </li>
            
            

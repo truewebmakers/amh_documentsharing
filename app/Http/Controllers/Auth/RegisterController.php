@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 class RegisterController extends Controller
 {
     /*
@@ -64,10 +67,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $role = Role::firstOrCreate(['name' => 'customer']);
+
+        $permissionsToAssign = ['user-profile-update'];  
+
+        // Assign the specified permissions to the user
+        $user->syncPermissions($permissionsToAssign); 
+        $user->assignRole([$role->id]);
+        return $user;
     }
 }

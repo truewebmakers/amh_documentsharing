@@ -48,8 +48,14 @@ class HomeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'password' => 'nullable|string|min:6|confirmed',
-            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the file types and size as needed
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'phone' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
         ]);
+
+        // dd($request->file('profile_pic'));
+
 
         if ($validator->fails()) {
             return redirect()
@@ -62,6 +68,9 @@ class HomeController extends Controller
         $user = auth()->user();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->city = $request->input('city');
+        $user->company = $request->input('company');
 
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
@@ -69,8 +78,10 @@ class HomeController extends Controller
 
         if ($request->hasFile('profile_pic')) {
             // Upload the profile picture to storage
-            $profilePicPath = $request->file('profile_pic')->store('profile_pics', 'public');
-            $user->profile_pic = $profilePicPath;
+            $image = $request->file('profile_pic');
+            $imageName =time() . 'profile.' . $image->getClientOriginalExtension();
+            Storage::disk('s3')->put('profile/' . $imageName, file_get_contents($image)); 
+            $user->profile_pic = $imageName;
         }
 
         $user->save();

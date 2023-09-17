@@ -9,7 +9,15 @@
                     <div class="card-body p-4">
                         <h1>Register</h1>
                         <p class="text-medium-emphasis">Create your account</p>
-
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                         <form method="POST" action="{{ route('register') }}">
                             @csrf <!-- Include the CSRF token -->
 

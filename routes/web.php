@@ -24,32 +24,22 @@ use App\Http\Controllers\{
 */
 
 Route::get('/', function () {
-    return view('welcome');
+     
+    return redirect('/home');
 });
-
+Auth::routes();
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit',[HomeController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [HomeController::class, 'update'])->name('profile.update');
-
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('document', DocumentUploadController::class);
-
     Route::post('/upload-doc-drop', [DocumentUploadController::class, 'upload'])->name('dropzon.upload-drop');
-
+    Route::post('/get-docs', [DocumentUploadController::class, 'getDocuments'])->name('get-docs');
     
-    
-
-
-
+ 
 })->middleware('auth');
 
-// Route::middleware(['auth', 'can:manage users'])->group(function () {
-//     Route::resource('users', UserController::class);
-// });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'edit'])->name('home');

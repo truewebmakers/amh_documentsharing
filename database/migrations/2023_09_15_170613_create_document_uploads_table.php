@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('document_uploads', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Add user_id column
+            $table->unsignedBigInteger('sent_from'); // Add user_id column
+            $table->unsignedBigInteger('sent_to'); // Add user_id column
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('file_path');
             $table->timestamps();
 
             // Define foreign key relationship
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('sent_from')->references('id')->on('users');
+            $table->foreign('sent_to')->references('id')->on('users');
             // ->onDelete('cascade');
         
         });

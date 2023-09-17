@@ -22,7 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_pic'
+        'profile_pic',
+        'phone',
+        'city',
+        'company'
     ];
 
     /**
@@ -44,4 +47,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    
+    public function getRelatedUsers()
+    {
+        // Get users to whom the current user has sent documents
+        $sentToUsers = $this->hasMany(DocumentUpload::class, 'sent_from')
+            ->distinct('sent_to')
+            ->pluck('sent_to');
+
+        // Get users from whom the current user has received documents
+        $receivedFromUsers = $this->hasMany(DocumentUpload::class, 'sent_to')
+            ->distinct('sent_from')
+            ->pluck('sent_from');
+
+        // Combine both sets of user IDs
+        $relatedUserIds = $sentToUsers->merge($receivedFromUsers)->unique();
+
+        // Retrieve the related users' details (ID and name)
+        $relatedUsers = User::whereIn('id', $relatedUserIds)->select('id', 'name','email')->get();
+        $sentUsers = [];
+        $receivedUsers = [];
+    
+        foreach ($relatedUsers as $user) {
+            if ($sentToUsers->contains($user->id)) {
+                $sentUsers[] = $user;
+            }
+    
+            if ($receivedFromUsers->contains($user->id)) {
+                $receivedUsers[] = $user;
+            }
+        }
+    
+        return [
+            'sentUsers' => $sentUsers,
+            'receivedUsers' => $receivedUsers,
+        ];
+    }
+     
+    
 }

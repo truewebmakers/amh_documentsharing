@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\{DocumentUpload, User};
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class DocumentUploadController extends Controller
 {
     /**
@@ -15,7 +17,11 @@ class DocumentUploadController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        // $userModel = new User(); 
+        $relatedUsers = $user->getRelatedUsers();
+        //  echo "<pre>"; print_r($relatedUsers); die; 
+        return view('document.explorer', compact('relatedUsers'));
     }
 
     /**
@@ -23,7 +29,17 @@ class DocumentUploadController extends Controller
      */
     public function create()
     {
-        $users = User::all(); // Fetch all users
+        $loggedInUser = Auth::user();
+
+        if ($loggedInUser->hasRole('admin')) {
+            // Fetch all users except the admin
+            $users = User::where('id', '!=', $loggedInUser->id)->get();
+        } else {
+            // If a non-admin user is logged in, they can only see users with the 'admin' role
+            $adminRole = Role::where('name', 'admin')->first();
+            $users = $adminRole->users;
+        }
+
         return view('document.create', compact('users'));
     }
 
@@ -90,37 +106,40 @@ class DocumentUploadController extends Controller
         // echo "<pre>"; print_r($userIdsArray); die; 
 
         foreach ($filePaths as $filePath) {
-            // Get the temp file from the local server
-            // $tempFilePath = storage_path('app/' . $filePath);
 
-            // Check if the file exists locally
-            // if (file_exists($tempFilePath)) {
-                // $fileName = basename($tempFilePath);
-                // Upload the file to S3 using Laravel's putFile method 
-                //   Storage::disk('s3')->put($fileName, file_get_contents($tempFilePath));
 
-                // Delete the temp file from the local server
-                // unlink($tempFilePath);
-
-                foreach ($userIdsArray as $user) {
-                    $user_id = $user['id'];
-                    DocumentUpload::create([
-                        'user_id' => $user_id,
-                        'title' => $request->input('title'),
-                        'description' => $request->input('description'),
-                        'file_path' => $filePath,
-                    ]);
-                }
-
-                // Create a new document upload record
-                
+            foreach ($userIdsArray as $user) {
+                $user_id = $user['id'];
+                DocumentUpload::create([
+                    'sent_from' => Auth::user()->id,
+                    'sent_to' => $user_id,
+                    'title' => $request->input('title'),
+                    'description' => $request->input('description'),
+                    'file_path' => $filePath,
+                ]);
             }
+
+            // Create a new document upload record
+
+        }
         // }
 
 
-       
+
 
         return redirect()->back()->with('success', 'Documents uploaded successfully!');
+    }
+
+    public function getDocuments(Request $request)
+    {
+
+        if ($request->input('type') == 'sent') {
+            $docs = DocumentUpload::where(['sent_from' => Auth::user()->id, 'sent_to' => $request->input('id')])->get()->toArray();
+            return response()->json(['status' => true, 'data' => $docs, 'path' => env('AWS_PUBLIC_PATH') . 'documents/'], 200);
+        } else {
+            $docs = DocumentUpload::where(['sent_to' => Auth::user()->id, 'sent_from' => $request->input('id')])->get()->toArray();
+            return response()->json(['status' => true, 'data' => $docs, 'path' => env('AWS_PUBLIC_PATH') . 'documents/'], 200);
+        }
     }
 
 
@@ -160,35 +179,32 @@ class DocumentUploadController extends Controller
 
     public function upload(Request $request)
     {
-        
+
 
         if ($request->hasFile('file')) {
             $request->validate([
-                'file' => 'required|file|mimes:pdf,doc,docx,txt,jpg,jpeg,png,gif,xls,xlsx|max:5120', // Adjust the allowed file types and size
+                'file' => 'required|file|mimes:pdf,doc,docx,txt,jpg,jpeg,png,gif,xls,xlsx', // Adjust the allowed file types and size
             ]);
             $image = $request->file('file');
-            $imageName = Str::uuid()->toString(). '.' . $image->getClientOriginalExtension();
+            $imageName = Str::uuid()->toString() . '.' . $image->getClientOriginalExtension();
             Storage::disk('s3')->put('documents/' . $imageName, file_get_contents($image));
             return response()->json([
                 'temp_path' => $imageName,
                 'message' => 'File uploaded successfully.',
-                'img_id' => 'img_id'.time(),
-            ]); 
-        } 
+                'img_id' => 'img_id' . time(),
+            ]);
+        }
         if ($request->input('type') == 'remove') {
             $image = $request->input('file_name');
-            $path = 'documents/'.$image;
-            if(Storage::disk('s3')->exists($path)) {
+            $path = 'documents/' . $image;
+            if (Storage::disk('s3')->exists($path)) {
                 Storage::disk('s3')->delete($path);
             }
             return response()->json([
                 'temp_path' => $image,
                 'message' => 'File deleted successfully.',
-                'img_id' => 'img_id'.time(),
+                'img_id' => 'img_id' . time(),
             ]);
-            
-            
-        }  
-       
+        }
     }
 }

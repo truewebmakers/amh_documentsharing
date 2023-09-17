@@ -47,15 +47,15 @@
                <tr>
                  <th>No</th>
                  <th>Name</th>
-                 <th width="280px" class="float-end">Action</th>
+                 <th width="280px">Action</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($roles as $key => $role)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $role->name }}</td>
-                    <td class="float-end">
+                    <td><span class="badge badge-success">{{ $role->name }}</span></td>
+                    <td >
                         <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
                        
                         <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
