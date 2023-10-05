@@ -1,7 +1,20 @@
 @extends('layout.guest')
 
 @section('content')
-
+<style>
+    .toggle-password {
+    float: right;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: -25px;
+}
+.tg {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    z-index: 99999;
+}
+</style>
 
     <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
         <div class="container">
@@ -54,12 +67,17 @@
                                             </svg>
                                         </span>
                                         <input class="form-control @error('password') is-invalid @enderror" type="password"
-                                            name="password" placeholder="Password" required>
+                                            name="password" placeholder="Password" required id="password">
+ 
+                                            {{-- --}}
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                        <div class="tg">
+                                            <i class="toggle-password fa fa-fw fa-eye-slash"></i> 
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
