@@ -47,7 +47,7 @@
                                         <div id="imagePreview"
                                             @if (auth()->user()->profile_pic) style="background-image: url('{{ env('AWS_PUBLIC_PATH') . 'profile/' . auth()->user()->profile_pic }}');"
                                         @else 
-                                            style="background-image: url('http://i.pravatar.cc/500?img=7');" @endif>
+                                            style="background-image: url('/assets/img/avatars/8.jpg');" @endif>
                                         </div>
                                     </div>
                                 </div>
