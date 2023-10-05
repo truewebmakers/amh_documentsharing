@@ -25,7 +25,24 @@ class User extends Authenticatable
         'profile_pic',
         'phone',
         'city',
-        'company'
+        'company',
+        'alternative_phone',
+        'company_address',
+        'street_address',
+        'suburb',
+        'state',
+        'post_code',
+        'company_name',
+        'australian_bussiness_number',
+        'number_of_emp',
+        'estimated_anunal_revenue',
+        'date_of_est',
+        'bussiness_type',
+        'bussiness_category',
+        'website_url',
+        'service_hour', 
+
+        
     ];
 
     /**

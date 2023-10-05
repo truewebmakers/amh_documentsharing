@@ -36,7 +36,7 @@ Auth::routes(['register' =>false ]);
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit',[HomeController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [HomeController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [HomeController::class, 'update'])->name('profile.update'); 
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
