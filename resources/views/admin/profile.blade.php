@@ -218,7 +218,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="date_of_est" class="form-label">Date Of EST</label>
+                                        <label for="date_of_est" class="form-label">Date of Establishment</label>
                                         <input type="text" class="form-control @error('date_of_est') is-invalid @enderror"
                                             id="date_of_est" name="date_of_est"
                                             value="{{ old('date_of_est', auth()->user()->date_of_est) }}" >
