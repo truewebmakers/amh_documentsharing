@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="company_address" class="form-label">Company Adresss</label>
+                                        <label for="company_address" class="form-label">Company Address</label>
                                         <input type="text" class="form-control @error('company_address') is-invalid @enderror"
                                             id="name" name="company_address"
                                             value="{{ old('company_address', auth()->user()->company_address) }}" >
