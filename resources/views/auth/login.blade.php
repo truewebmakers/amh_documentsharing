@@ -10,8 +10,17 @@
                     <div class="card-group d-block d-md-flex row">
                         <div class="card col-md-7 p-4 mb-0">
                             <div class="card-body">
-                                <h1>Login</h1>
+				<div class="main-login">
+				<div class="a text-center">
+				    <img src="/assets/img/amh-logo.png" style="height:70px; width:100px;" >		
+				</div>
+				<div class="b">
+				 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Sign In to your account</p>
+				</div>
+				
+				</div>
+                                
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -56,7 +65,7 @@
                                         <div class="col-6">
                                             <button class="btn btn-primary px-4" type="submit">Login</button>
                                         </div>
-                                        <div class="col-6 text-end">
+                                        <div class="col-6 text-end d-none">
                                             @if (Route::has('password.request'))
                                                 <a class="btn btn-link px" href="{{ route('password.request') }}">
                                                     {{ __('Forgot Your Password?') }}
@@ -68,7 +77,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="card col-md-5 text-white bg-primary py-5">
+                        <div class="card col-md-5 text-white bg-primary py-5 d-none">
                             <div class="card-body text-center">
                                 <div>
                                     <h2>Sign up</h2>

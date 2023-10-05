@@ -1,11 +1,21 @@
+<style>
+.sidebar-brand.d-none.d-md-flex img {
+    height: 70px;
+    width: 160px;
+    margin: 10px;
+}
+
+
+</style>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
     <div class="sidebar-brand d-none d-md-flex">
-      <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+      <img src="/assets/img/amh-logo.png">
+     <!--  <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
         <use xlink:href="/assets/brand/coreui.svg#full"></use>
       </svg>
       <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
         <use xlink:href="/assets/brand/coreui.svg#signet"></use>
-      </svg>
+      </svg> -->
     </div>
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
       {{-- <li class="nav-item"><a class="nav-link" href="index.html">

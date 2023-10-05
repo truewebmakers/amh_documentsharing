@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\{
     HomeController,
     RoleController,
@@ -22,12 +22,17 @@ use App\Http\Controllers\{
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/call-artisan-cmd', function () {
+      Artisan::call('config:cache');
+      Artisan::call('config:clear'); 
+       $output = Artisan::output();
+    return response()->json(['message' => 'Artisan command executed successfully','out' =>  $output]);
+});
 
-Route::get('/', function () {
-     
+Route::get('/', function () { 
     return redirect('/home');
 });
-Auth::routes();
+Auth::routes(['register' =>false ]);
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit',[HomeController::class, 'edit'])->name('profile.edit');

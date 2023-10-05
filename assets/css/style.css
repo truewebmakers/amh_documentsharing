@@ -14704,5 +14704,12 @@ i{
   z-index: 99999;
   width: 240px;
 }
-
+.col-sm-8.tab-content.no-bg.no-border.view-side {
+    height: 500px;
+}
+.avatar-img {
+    width: 100%;
+    height: 100% !important;
+    border-radius: 50em;
+}
 /* developer end css */

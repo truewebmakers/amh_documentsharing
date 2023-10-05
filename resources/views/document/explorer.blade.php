@@ -72,7 +72,7 @@
                 </div>
  
             </div>
-            <div class="col-sm-8 tab-content no-bg no-border">
+            <div class="col-sm-8 tab-content no-bg no-border view-side">
                 <div class="tab-pane active documents documents-panel" id="documents-panel-list">
                     {{-- <div class="document success">
                         <div class="document-body">
