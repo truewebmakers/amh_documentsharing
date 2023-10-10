@@ -1,7 +1,10 @@
-{{-- <footer class="footer">
-    <div><a href="https://coreui.io">CoreUI </a><a href="https://coreui.io">Bootstrap Admin Template</a> © 2023 creativeLabs.</div>
-    <div class="ms-auto">Powered by&nbsp;<a href="https://coreui.io/docs/">CoreUI UI Components</a></div>
-  </footer> --}}
+<footer class="footer mt-3" > 
+    <span class="disclamer" style="font-size: 12px"> We are pleased to accept appointment as your Tax Agent for the 2022/2023 year and beyond. This document sets out the terms of our engagement with you. As required under the Tax Agent Services Act 2009 we will be subject to the provisions of that law.
+    As your Tax Agent we will prepare, complete and lodge your tax return, liaise with ATO on your behalf for the tax year in question along with all the previous tax years, matters related to you whether GST, FBR ABN or any other matter asked whether verbally or in writing until this authority is specifically revoked by you.
+    By providing this authority, you acknowledge that you have duly authorised the person named as our authorised representative to provide and be provided with your personal taxation information and to discuss any relevant taxation information with an authorised AHM Accounting Experts representative. This authority is strictly limited to the engagement above and understood between the parties.
+  </span>
+    <div class="ms-auto">Powered by&nbsp;<a href="https://amhexperts.com/">AMH Experts </a></div>
+  </footer>
 </div>
 <!-- CoreUI and necessary plugins-->
 

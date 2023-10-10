@@ -174,15 +174,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="company_address" class="form-label">Australian Business Number                                         </label>
-                                        <input type="text" class="form-control @error('australian_bussiness_number') is-invalid @enderror"
-                                            id="australian_bussiness_number" name="australian_bussiness_number"
-                                            value="{{ old('australian_bussiness_number', auth()->user()->australian_bussiness_number) }}" >
-                                        @error('australian_bussiness_number')
+                                        <label for="company_address" class="form-label">Post Code</label>
+                                        <input type="text" class="form-control @error('post_code') is-invalid @enderror"
+                                            id="post_code" name="post_code"
+                                            value="{{ old('post_code', auth()->user()->post_code) }}" >
+                                        @error('post_code')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                                
                                 
                             </div>
 
@@ -282,17 +283,19 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="company_address" class="form-label">Post Code</label>
-                                        <input type="text" class="form-control @error('post_code') is-invalid @enderror"
-                                            id="post_code" name="post_code"
-                                            value="{{ old('post_code', auth()->user()->post_code) }}" >
-                                        @error('post_code')
+                                        <label for="company_address" class="form-label">Australian Business Number                                         </label>
+                                        <input type="text" class="form-control @error('australian_bussiness_number') is-invalid @enderror"
+                                            id="australian_bussiness_number" name="australian_bussiness_number"
+                                            value="{{ old('australian_bussiness_number', auth()->user()->australian_bussiness_number) }}" >
+                                        @error('australian_bussiness_number')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                                
 
                                 {{-- <div class="col-md-6">
                                     <div class="mb-3">
@@ -333,6 +336,8 @@
 
 
                             <button type="submit" class="btn btn-primary">Update Profile</button>
+
+                             
                         </form>
 
                     </div>
